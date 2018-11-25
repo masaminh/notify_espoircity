@@ -1,0 +1,4 @@
+bs4==0.0.1
+mojimoji==0.0.8
+python-dotenv==0.9.1
+requests==2.20.1
