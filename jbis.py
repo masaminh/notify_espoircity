@@ -18,7 +18,7 @@ def iter_sire_entries(horseid):
         'Entry', ['date', 'course', 'raceno', 'racename', 'horsename'])
 
     for h2 in h2s:
-        m = re.fullmatch(r"([0-9]{1,2})月([0-9]{1,2})日出走分", h2.string)
+        m = re.fullmatch(r"\s?([0-9]{1,2})月\s?([0-9]{1,2})日出走分", h2.string)
         month = int(m.group(1))
         day = int(m.group(2))
         date = datetime.date(
