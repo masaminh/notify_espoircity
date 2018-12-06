@@ -4,8 +4,8 @@ from itertools import groupby
 
 import jbis
 import line
-import mojimoji
 import settings
+import utility
 
 
 def main():
@@ -19,8 +19,7 @@ def main():
     for date, g in groupby(jbis.iter_sire_entries('0000888832'), lambda e: e.date):
         content += f'\n{date.strftime("%m/%d")}\n'
         for r, g2 in groupby(g, lambda x: (x.course, x.raceno, x.racename)):
-            racename = mojimoji.zen_to_han(r[2], kana=False)
-            content += f'　{r[0]}{r[1]}R {racename}\n'
+            content += '　' + utility.get_racename_line(*r) + '\n'
             for e in g2:
                 content += f'　　{e.horsename}\n'
 

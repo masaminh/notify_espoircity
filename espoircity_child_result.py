@@ -7,6 +7,7 @@ import jbis
 import line
 import nar
 import settings
+import utility
 
 
 def main():
@@ -19,8 +20,8 @@ def main():
     today = datetime.date.today()
     todayhorse = (x for x in jbis.iter_sire_entries(
         '0000888832') if x.date == today)
-    for r, g in groupby(todayhorse, lambda x: (x.course, x.raceno)):
-        content += f'{r[0]}{r[1]}R\n'
+    for r, g in groupby(todayhorse, lambda x: (x.course, x.raceno, x.racename)):
+        content += utility.get_racename_line(*r) + '\n'
         raceresult = nar.get_race_result(today, r[0], r[1])
         if raceresult is not None:
             result = {x.name: x for x in nar.get_race_result(
