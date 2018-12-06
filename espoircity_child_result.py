@@ -3,6 +3,8 @@ import datetime
 from argparse import ArgumentParser
 from itertools import groupby
 
+import emoji
+
 import jbis
 import line
 import nar
@@ -18,27 +20,36 @@ def main():
 
     content = "エスポワールシチー産駒の成績\n\n"
     today = datetime.date.today()
-    todayhorse = (x for x in jbis.iter_sire_entries(
-        '0000888832') if x.date == today)
-    for r, g in groupby(todayhorse, lambda x: (x.course, x.raceno, x.racename)):
-        content += utility.get_racename_line(*r) + '\n'
-        raceresult = nar.get_race_result(today, r[0], r[1])
-        if raceresult is not None:
-            result = {x.name: x for x in nar.get_race_result(
-                today, r[0], r[1])}
-        else:
-            result = dict()
+    todayhorse = [x for x in jbis.iter_sire_entries(
+        '0000888832') if x.date == today]
 
-        for h in g:
-            if h.horsename in result:
-                horse = result[h.horsename]
-                poplar = horse.poplar
-                order = horse.order
+    if len(todayhorse) > 0:
+        for r, g in groupby(todayhorse, lambda x: (x.course, x.raceno, x.racename)):
+            content += utility.get_racename_line(*r) + '\n'
+            raceresult = nar.get_race_result(today, r[0], r[1])
+            if raceresult is not None:
+                result = {x.name: x for x in nar.get_race_result(
+                    today, r[0], r[1])}
             else:
-                poplar = '*'
-                order = '*'
+                result = dict()
 
-            content += f'　{h.horsename} {poplar}番人気 {order}着\n'
+            for h in g:
+                if h.horsename in result:
+                    horse = result[h.horsename]
+                    poplar = horse.poplar
+                    order = horse.order
+                else:
+                    poplar = '*'
+                    order = '*'
+
+                content += f'　{h.horsename} {poplar}番人気 {order}着'
+
+                if order == '1':
+                    content += emoji.emojize(':confetti_ball:')
+
+                content += '\n'
+    else:
+        content += '出走なし\n'
 
     if args.debug:
         print(content)
