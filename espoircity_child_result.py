@@ -3,6 +3,8 @@ import datetime
 from argparse import ArgumentParser
 from itertools import groupby
 
+import emoji
+
 import jbis
 import line
 import nar
@@ -38,7 +40,12 @@ def main():
                 poplar = '*'
                 order = '*'
 
-            content += f'　{h.horsename} {poplar}番人気 {order}着\n'
+            content += f'　{h.horsename} {poplar}番人気 {order}着'
+
+            if order == '1':
+                content += emoji.emojize(':confetti_ball:')
+
+            content += '\n'
 
     if args.debug:
         print(content)
