@@ -1,10 +1,11 @@
 """keiba.go.jpへのアクセス関数群."""
 import datetime
 import time
-from collections import namedtuple
 
 import requests
 from bs4 import BeautifulSoup
+
+from horseraceutility import HorseResult
 
 _lastaccess = datetime.datetime(2000, 1, 1)
 
@@ -32,8 +33,6 @@ def get_race_result(date, course, raceno):
     _lastaccess = datetime.datetime.now()
 
     soup = BeautifulSoup(r.content, "html.parser")
-
-    HorseResult = namedtuple('HorseResult', ['order', 'name', 'poplar'])
 
     def get_horseresult(tr):
         tds = tr.find_all('td')
