@@ -64,14 +64,3 @@ def _requests_get(url, params=None):
     r = requests.get(url, params=params)
     _lastaccess = datetime.datetime.now()
     return r
-
-
-def main():
-    """メイン関数."""
-    result = get_race_result(datetime.date(2018, 12, 2), '中京', 11)
-
-    print(result)
-
-
-if __name__ == "__main__":
-    main()
