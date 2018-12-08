@@ -10,6 +10,7 @@ import line
 import nar
 import settings
 import utility
+import netkeiba
 
 
 def main():
@@ -27,9 +28,11 @@ def main():
         for r, g in groupby(todayhorse, lambda x: (x.course, x.raceno, x.racename)):
             content += utility.get_racename_line(*r) + '\n'
             raceresult = nar.get_race_result(today, r[0], r[1])
+            if raceresult is None:
+                raceresult = netkeiba.get_race_result(today, r[0], r[1])
+
             if raceresult is not None:
-                result = {x.name: x for x in nar.get_race_result(
-                    today, r[0], r[1])}
+                result = {x.name: x for x in raceresult}
             else:
                 result = dict()
 

@@ -27,5 +27,5 @@ def iter_sire_entries(horseid):
         for tr in h2.find_next('tbody').find_all('tr'):
             tds = tr.find_all('td')
             entry = Entry(date, tr.find('th').string,
-                          tds[0].string, tds[1].text.strip(), tds[7].string)
+                          int(tds[0].string), tds[1].text.strip(), tds[7].string)
             yield entry
