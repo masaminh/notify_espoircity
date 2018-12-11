@@ -36,6 +36,11 @@ def get_race_result(date, course, raceno):
 
     def get_horseresult(tr):
         tds = tr.find_all('td')
-        return HorseResult(tds[0].string, tds[3].text.strip(), tds[14].string)
+        order = tds[0].string.strip()
+
+        if order == '':
+            order = tds[12].string
+
+        return HorseResult(order=order, name=tds[3].text.strip(), poplar=tds[14].string)
 
     return [get_horseresult(tr) for tr in soup.find('tr', class_='dbitem').findNextSiblings('tr')]

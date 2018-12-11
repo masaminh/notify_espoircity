@@ -45,7 +45,14 @@ def main():
                     poplar = '*'
                     order = '*'
 
-                content += f'　{h.horsename} {poplar}番人気 {order}着'
+                content += f'　{h.horsename} '
+
+                if order.isdecimal():
+                    content += f'{poplar}番人気 {order}着'
+                elif order == '取消':
+                    content += '出走取消'
+                else:
+                    content += order
 
                 if order == '1':
                     content += emoji.emojize(':confetti_ball:')
