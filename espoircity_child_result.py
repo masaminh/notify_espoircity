@@ -1,16 +1,17 @@
 """エスポワールシチー産駒の成績を通知する."""
 import datetime
+import logging
 from argparse import ArgumentParser
 from itertools import groupby
 
 import emoji
 
+import horseracelib.jbis
+import horseracelib.nar
+import horseracelib.netkeiba
 import line
 import settings
 import utility
-import horseracelib.nar
-import horseracelib.jbis
-import horseracelib.netkeiba
 
 
 def main():
@@ -18,6 +19,9 @@ def main():
     parser = ArgumentParser(description='エスポワールシチー産駒の出走予定をLINE Notifyに送る')
     parser.add_argument('-d', '--debug', action='store_true', help='デバッグ用')
     args = parser.parse_args()
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
 
     nar = horseracelib.nar.Access()
     jbis = horseracelib.jbis.Access()
