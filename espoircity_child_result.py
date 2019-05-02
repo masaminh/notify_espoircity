@@ -21,8 +21,8 @@ def main():
     parser.add_argument('--loggingdebug', action='store_true', help='デバッグ用')
     args = parser.parse_args()
 
-    if args.loggingdebug:
-        logging.basicConfig(level=logging.DEBUG)
+    log_level = logging.DEBUG if args.loggingdebug else logging.INFO
+    logging.basicConfig(level=log_level)
 
     nar = horseracelib.nar.Access()
     jbis = horseracelib.jbis.Access()
