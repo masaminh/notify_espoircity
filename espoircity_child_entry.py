@@ -1,6 +1,7 @@
 """エスポ産駒の出走予定を取得する."""
 from argparse import ArgumentParser
 from itertools import groupby
+import logging
 
 import line
 import settings
@@ -12,7 +13,11 @@ def main():
     """メイン関数."""
     parser = ArgumentParser(description='エスポワールシチー産駒の出走予定をLINE Notifyに送る')
     parser.add_argument('-d', '--debug', action='store_true', help='デバッグ用')
+    parser.add_argument('--loggingdebug', action='store_true', help='デバッグ用')
     args = parser.parse_args()
+
+    log_level = logging.DEBUG if args.loggingdebug else logging.INFO
+    logging.basicConfig(level=log_level)
 
     jbis = horseracelib.jbis.Access()
     content = f'エスポワールシチー産駒の出走予定\n'
