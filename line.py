@@ -14,7 +14,7 @@ def notify(token, message):
     logging.info('LINE Notify response: %s', res.text)
 
 
-@retry(ConnectionError, tries=2, delay=10)
+@retry(requests.exceptions.RequestException, tries=2, delay=10)
 def _call_notify_api(payload, headers):
     res = requests.post('https://notify-api.line.me/api/notify',
                         data=payload, headers=headers)
