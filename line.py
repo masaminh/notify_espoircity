@@ -18,4 +18,7 @@ def notify(token, message):
 def _call_notify_api(payload, headers):
     res = requests.post('https://notify-api.line.me/api/notify',
                         data=payload, headers=headers)
+    if res.status_code > 500:
+        res.raise_for_status()
+
     return res
